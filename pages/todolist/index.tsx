@@ -16,7 +16,7 @@ import InputFiled from '../../components/InputFiled'
 //  const todayFormat:string= `${yyyy}-${mm}-${dd}`
 //      return todayFormat;
 // }
-const toToList: FC = () => {
+const ToDoList : FC = () => {
 
 
   const [taskName, setTaskName] = useState<string>("")
@@ -56,4 +56,4 @@ const toToList: FC = () => {
 }
 
 
-export default toToList 
+export default ToDoList 
