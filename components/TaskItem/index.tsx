@@ -30,8 +30,8 @@ const TaskItem: FC<Props> = ({ task, setTaskList, taskList }) => {
     inputDeadlineRef.current?.focus();
     executeRef.current = true;
   }, [edit]);
-  console.log(inputTaskNameRef.current);
-  console.log(inputDeadlineRef.current);
+  // console.log(inputTaskNameRef.current);
+  // console.log(inputDeadlineRef.current);
 
   const EditTask = (e: FormEvent, id: string) => {
     e.preventDefault();

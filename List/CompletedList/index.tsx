@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useState,useRef } from 'react'
 import { ITask } from '../../utility/types'
 import TaskItem from '../../components/TaskItem'
 
@@ -13,7 +13,7 @@ interface Props {
 const CompletedListUI: FC<Props> = ({ taskList, setTaskList }) => {
 
   const [completedList, setCompletedList] = useState<ITask[]>([])
-
+  
 
   const CompletedList = () => {
     setCompletedList(taskList.filter((task) => {
@@ -21,8 +21,10 @@ const CompletedListUI: FC<Props> = ({ taskList, setTaskList }) => {
     }))
   }
   useEffect(() => {
+   
     CompletedList()
-  }, [completedList])
+    
+  }, [taskList])
 
   return (
     <>

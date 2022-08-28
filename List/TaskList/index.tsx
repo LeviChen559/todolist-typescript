@@ -1,4 +1,4 @@
-import React,{FC,useState,useEffect} from 'react'
+import React,{FC,useState,useEffect,useRef,useMemo, useCallback} from 'react'
 import { ITask } from '../../utility/types'
 import TaskItem from '../../components/TaskItem'
 
@@ -12,14 +12,18 @@ setTaskList: React.Dispatch<React.SetStateAction<Array<ITask>>>;
 const TaskListUI:FC<Props> = ({taskList,setTaskList} )  => {
     const [activeList, setActiveList] = useState<ITask[]>([])
 
+    
+    useEffect(() => {
+      
+      ActiveList()
+     
+    }, [taskList])
+
     const ActiveList = () => {
         setActiveList(taskList.filter((task) => {
           return task.Priority != true && task.Completed!= true
         }))
       }
-      useEffect(() => {
-        ActiveList()
-      }, [activeList])
 
 
     return (
