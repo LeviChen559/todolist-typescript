@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, FormEvent, useMemo } from 'react'
+import React, { useState, useEffect, useRef, FormEvent, useMemo, FC, memo } from 'react'
 import { ITask } from '../../utility/types'
 import { TaskItemContainer } from './taskItem.style'
 import Card from '@mui/material/Card';
@@ -13,11 +13,11 @@ import EditIcon from '@mui/icons-material/Edit';
 
 interface Props {
   task: ITask;
-  taskList: Array<ITask>;
+  taskList:Array<ITask>;
   setTaskList: React.Dispatch<React.SetStateAction<Array<ITask>>>;
 }
 
-const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
+const TaskItem: FC<Props> = ({ task, setTaskList, taskList }) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editTaskName, setEditTaskName] = useState<string>(task.TaskName);
   const [editDeadline, setEditDeadline] = useState<string>(task.Deadline);
@@ -38,6 +38,7 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
     setTaskList(
       taskList.map((task) => (task.id === id ? { ...task, TaskName: editTaskName, Deadline: editDeadline } : task))
     );
+   
     setEdit(false);
   };
   const CompleteTask = (id: string): void => {
@@ -54,7 +55,7 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
   return <>
 
     {task.Priority && task.Completed === true ?
-      <Card sx={{ maxWidth: 345, backgroundColor: 'red', margin: 1, opacity: .25 }} >
+      <Card sx={{ width: '90%', backgroundColor: 'red', margin: 1, opacity: .25 }} >
         <CardContent>
           <form
             onSubmit={(e) => EditTask(e, task.id)}
@@ -97,7 +98,7 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
             }
           </form>
         </CardContent>
-        <CardActions>
+        <CardActions sx={{ display: 'flex',flexDirection:'row',justifyContent: 'space-evenly' }}>
           <Button size="small" onClick={() => { if (!edit && task.Completed != true) { setEdit(!edit) } }}><EditIcon /></Button>
           <Button size="small" onClick={() => CompleteTask(task.id)}><CheckIcon /></Button>
           <Button size="small" onClick={() => DeleteTask(task.id)}><DeleteForeverIcon /></Button>
@@ -105,7 +106,7 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
       </Card>
       :
       task.Priority === true && task.Completed === false ?
-        <Card sx={{ maxWidth: 345, backgroundColor: 'red', margin: 1, opacity: 1 }} >
+        <Card sx={{ width: '90%', backgroundColor: 'red', margin: 1, opacity: 1 }} >
           <CardContent>
             <form
               onSubmit={(e) => EditTask(e, task.id)}
@@ -138,14 +139,14 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
               }
             </form>
           </CardContent>
-          <CardActions>
+          <CardActions sx={{ display: 'flex',flexDirection:'row',justifyContent: 'space-evenly' }}>
             <Button size="small" onClick={() => { if (!edit && task.Completed != true) { setEdit(!edit) } }}><EditIcon /></Button>
             <Button size="small" onClick={() => CompleteTask(task.id)}><CheckIcon /></Button>
             <Button size="small" onClick={() => DeleteTask(task.id)}><DeleteForeverIcon /></Button>
           </CardActions>
         </Card>
         : task.Priority === false && task.Completed === true ?
-          <Card sx={{ maxWidth: 345, backgroundColor: 'white', margin: 1, opacity: .25 }} >
+          <Card sx={{ width: '90%', backgroundColor: 'white', margin: 1, opacity: .25 }} >
             <CardContent>
               <form
                 onSubmit={(e) => EditTask(e, task.id)}
@@ -178,14 +179,14 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
                 }
               </form>
             </CardContent>
-            <CardActions>
+            <CardActions sx={{ display: 'flex',flexDirection:'row',justifyContent: 'space-evenly' }}>
               <Button size="small" onClick={() => { if (!edit && task.Completed != true) { setEdit(!edit) } }}><EditIcon /></Button>
               <Button size="small" onClick={() => CompleteTask(task.id)}><CheckIcon /></Button>
               <Button size="small" onClick={() => DeleteTask(task.id)}><DeleteForeverIcon /></Button>
             </CardActions>
           </Card>
           :
-          <Card sx={{ maxWidth: 345, backgroundColor: 'white', margin: 1, opacity: 1 }} >
+          <Card sx={{ width: '90%', backgroundColor: 'white', margin: 1, opacity: 1 }} >
             <CardContent>
               <form
                 onSubmit={(e) => EditTask(e, task.id)}
@@ -218,7 +219,7 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
                 }
               </form>
             </CardContent>
-            <CardActions>
+            <CardActions sx={{ display: 'flex',flexDirection:'row',justifyContent: 'space-evenly' }}>
               <Button size="small" onClick={() => { if (!edit && task.Completed != true) { setEdit(!edit) } }}><EditIcon /></Button>
               <Button size="small" onClick={() => CompleteTask(task.id)}><CheckIcon /></Button>
               <Button size="small" onClick={() => DeleteTask(task.id)}><DeleteForeverIcon /></Button>
@@ -230,4 +231,4 @@ const TaskItem = ({ task, setTaskList, taskList }: Props,) => {
   </>
 }
 
-export default React.memo(TaskItem) 
+export default memo(TaskItem) 

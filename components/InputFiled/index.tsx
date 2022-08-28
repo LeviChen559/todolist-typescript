@@ -15,7 +15,7 @@ interface Props {
     priority: boolean
 }
 
-const InputFiled = ({ handleSubmit, taskName, deadline, setTaskName, setDeadline, priority, setPriority }: Props,) => {
+const InputFiled:FC<Props> = ({ handleSubmit, taskName, deadline, setTaskName, setDeadline, priority, setPriority }) => {
 
 
 

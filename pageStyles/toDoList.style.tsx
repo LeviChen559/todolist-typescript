@@ -29,6 +29,28 @@ export const Content = styled.div({
   display: 'flex',
   flexDirection: 'row',
   flexWrap: 'wrap',
-  justifyContent: 'flex-start',
+  justifyContent: 'space-evenly',
   alignItems: 'flex-start',
+})
+export const Col = styled.div({
+  label: 'Col',
+  flex:1,
+  width: '33%',
+  paddingTop:"2rem",
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'wrap',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  border: '1px solid gray',
+  margin: '0 10px',
+  borderRadius: '10px',
+})
+export const HeaderText = styled.div({
+width: '100%',
+textAlign: 'center',
+fontSize: '24px',
+fontWeight: 'bold',
+
+
 })

@@ -1,37 +1,41 @@
-import React, { ChangeEvent, useEffect, useState, FC, MouseEvent } from 'react'
+import React, { ChangeEvent, useEffect, useState, FC, MouseEvent, useMemo } from 'react'
 import {
-  Container, Head, Content
+  Container, Head, Content,Col,HeaderText
 } from '../../pageStyles/toDoList.style'
 import { ITask } from '../../utility/types'
 import TaskItem from '../../components/TaskItem'
 import { v4 as uuidv4 } from 'uuid'
 import InputFiled from '../../components/InputFiled'
+import TaskListUI from '../../List/TaskList'
+import CompletedListUI from '../../List/CompletedList'
+import PriorityListUI from '../../List/PriorityList'
 
-// const getTodayFormat=()=>{
-//  const today:Date =new Date();
-//  const dd:string= JSON.stringify(today.getDate());
-//  const mm:string = 0+JSON.stringify(today.getMonth()+1);
-//  const yyyy:string= JSON.stringify(today.getFullYear());
+const ToDoList: FC = () => {
+  
 
-//  const todayFormat:string= `${yyyy}-${mm}-${dd}`
-//      return todayFormat;
-// }
-const ToDoList : FC = () => {
+   const today:Date =new Date();
+   const dd:string= JSON.stringify(today.getDate());
+   const mm:string = 0+JSON.stringify(today.getMonth()+1);
+   const yyyy:string= JSON.stringify(today.getFullYear());
+  
+   const todayFormat:string= `${yyyy}-${mm}-${dd}`
+      
 
 
-  const [taskName, setTaskName] = useState<string>("")
-  const [deadline, setDeadline] = useState<string>("")
+  const [taskName, setTaskName] = useState<string>("taskName")
+  const [deadline, setDeadline] = useState<string>(todayFormat)
   const [complete, setComplete] = useState<boolean>(false)
   const [priority, setPriority] = useState<boolean>(false)
   const [taskList, setTaskList] = useState<ITask[]>([])
+  const [completedkList, setCompletedList] = useState<ITask[]>([])
 
   const handleSubmit = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     const newTask = { id: uuidv4(), TaskName: taskName, Deadline: deadline, Completed: complete, Priority: priority };
     setTaskList([...taskList, newTask]);
-    setTaskName("")
+    setTaskName("taskName")
     setComplete(false)
-    setDeadline("")
+    setDeadline(todayFormat)
     setPriority(false)
 
   }
@@ -47,9 +51,18 @@ const ToDoList : FC = () => {
           deadline={deadline} taskName={taskName} priority={priority} setPriority={setPriority} />
       </Head>
       <Content>
-        {taskList.map((task: ITask, key: number) => {
-          return <TaskItem key={key} task={task} setTaskList={setTaskList} taskList={taskList} />
-        })}
+        <Col>
+        <HeaderText> Priority Task</HeaderText>
+        <PriorityListUI setTaskList={setTaskList} taskList={taskList}  />
+        </Col>
+        <Col>
+        <HeaderText> Active Task</HeaderText>
+        <TaskListUI setTaskList={setTaskList} taskList={taskList} />
+        </Col>
+        <Col>
+        <HeaderText> Completed Task</HeaderText>
+        <CompletedListUI setTaskList={setTaskList} taskList={taskList} />
+        </Col>
       </Content>
     </Container>
   )
